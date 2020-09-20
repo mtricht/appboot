@@ -31,9 +31,7 @@ A manifest can be created with `appboot packer`. A manifest is a YAML file conta
 | Configuration name | Description |
 | --- | --- |
 | `manifest_url` | URL to a manifest containing a list of files and their latest version. |
-| `command_windows` | The command to execute to start your program on windows. |
-| `command_linux` | The command to execute to start your program on linux. |
-| `command_macos` | The command to execute to start your program on macOS. |
+| `command` | The command to execute to start your program. |
 
 ## Lifecycle
 
