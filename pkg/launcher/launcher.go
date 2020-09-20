@@ -1,4 +1,4 @@
-package progress
+package launcher
 
 import (
 	"net/url"

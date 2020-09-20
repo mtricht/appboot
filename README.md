@@ -8,6 +8,8 @@ A cross-platform language-agnostic bootstrapper which keeps your application up 
 - [ ] Implement GUI version. [wails](https://github.com/wailsapp/wails)? [fyne](https://github.com/fyne-io/fyne)? [astilectron](https://github.com/asticode/go-astilectron)? [Qt](https://github.com/therecipe/qt)?
 - [ ] Is it possible to update appboot itself?
 
+## Installation
+
 ## Application structure
 
 ```
@@ -17,11 +19,11 @@ app/
 ```
 
 ## Manifest
-A manifest can be created with `appboot packer`. A manifest is a YAML file containing an array of:
+A manifest can be generated with `appboot manifest` and is always named `appboot.json`. A manifest is a JSON file containing an array of objects with the following keys:
 
 | Manifest key | Description |
 | --- | --- |
-| `file` | Path to the file from `app/`. |
+| `file` | Path to the file. |
 | `checksum` | A SHA-256 hash of the contents of the file. |
 | `url` | The URL where the file can be downloaded from. |
 | `size` | Size of the file in bytes. |
