@@ -27,7 +27,6 @@ Example:
 	cd my-app && appboot manifest --output=./manifest.json --url=https://storage.googleapis.com/my-app/`,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		log.Println("Generating manifest file...")
-		// TODO: Support more than just the working directory.
 		err := manifest.Generate(".", output, url)
 		if err != nil {
 			return err
