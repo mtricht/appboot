@@ -5,7 +5,7 @@ A cross-platform language-agnostic bootstrapper which keeps your application up 
 ## TODO
 
 - [ ] Implement CLI version with [schollz/progressbar](https://github.com/schollz/progressbar)
-- [ ] Implement GUI version. [wails](https://github.com/wailsapp/wails)? [fyne](https://github.com/fyne-io/fyne)? [astilectron](https://github.com/asticode/go-astilectron)?
+- [ ] Implement GUI version. [wails](https://github.com/wailsapp/wails)? [fyne](https://github.com/fyne-io/fyne)? [astilectron](https://github.com/asticode/go-astilectron)? [Qt](https://github.com/therecipe/qt)?
 - [ ] Is it possible to update appboot itself?
 
 ## Application structure
