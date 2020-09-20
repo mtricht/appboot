@@ -38,7 +38,6 @@ A manifest can be created with `appboot packer`. A manifest is a YAML file conta
 1. Read configuration from env/files with [viper](https://github.com/spf13/viper)
 2. Create launcher
 3. Download remote master file
-4. Determine if upate is needed, if none is needed continue to 7
+4. Determine if upate is needed, if none is needed continue to 6
 5. Track download progress
-6. Track unpacking progress
-7. Execute command
+6. Execute command
