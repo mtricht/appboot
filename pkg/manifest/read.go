@@ -2,15 +2,15 @@ package manifest
 
 import (
 	"encoding/json"
-	"io/ioutil"
 	"fmt"
+	"io/ioutil"
 	"net/http"
 
 	"github.com/pkg/errors"
 )
 
 // Read reads a manifest from a remote URL
-func Read(URL string) ([]Entry, error) {
+func Read(URL string) ([]File, error) {
 	response, err := http.Get(URL)
 	if err != nil {
 		return nil, errors.Wrap(err, fmt.Sprintf("unable to open manifest from '%s'", URL))
@@ -19,7 +19,7 @@ func Read(URL string) ([]Entry, error) {
 	if err != nil {
 		return nil, errors.Wrap(err, fmt.Sprintf("unable to open manifest from '%s'", URL))
 	}
-	var manifest []Entry
+	var manifest []File
 	err = json.Unmarshal(content, &manifest)
 	if err != nil {
 		return nil, errors.Wrap(err, fmt.Sprintf("unable to open manifest from '%s'", URL))

@@ -2,12 +2,6 @@
 
 A cross-platform language-agnostic bootstrapper which keeps your application up to date. Available for CLI and GUI applications.
 
-## TODO
-
-- [ ] Implement CLI version with [schollz/progressbar](https://github.com/schollz/progressbar)
-- [ ] Implement GUI version. [wails](https://github.com/wailsapp/wails)? [fyne](https://github.com/fyne-io/fyne)? [astilectron](https://github.com/asticode/go-astilectron)? [Qt](https://github.com/therecipe/qt)?
-- [ ] Is it possible to update appboot itself?
-
 ## Installation
 
 ## Application structure
@@ -42,3 +36,9 @@ A manifest can be generated with `appboot manifest` and is always named `appboot
 4. Determine if upate is needed, if none is needed continue to 6
 5. Track download progress
 6. Execute command
+
+## TODO
+
+- [X] Implement CLI version with [schollz/progressbar](https://github.com/schollz/progressbar)
+- [ ] Implement GUI version. [wails](https://github.com/wailsapp/wails)? [fyne](https://github.com/fyne-io/fyne)? [astilectron](https://github.com/asticode/go-astilectron)? [Qt](https://github.com/therecipe/qt)?
+- [ ] Is it possible to update appboot itself?

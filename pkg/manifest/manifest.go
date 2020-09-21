@@ -1,7 +1,7 @@
 package manifest
 
-// Entry represents a file in the manifest
-type Entry struct {
+// File represents a file in the manifest
+type File struct {
 	File     string `json:"file"`
 	Checksum string `json:"checksum"`
 	URL      string `json:"url"`

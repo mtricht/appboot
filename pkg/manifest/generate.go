@@ -38,8 +38,8 @@ func Generate(source string, output string, URL string) error {
 	return createManifest(entries, output)
 }
 
-func getEntries(directory string, URL string) ([]Entry, error) {
-	entries := make([]Entry, 0)
+func getEntries(directory string, URL string) ([]File, error) {
+	entries := make([]File, 0)
 	err := filepath.Walk(directory, func(path string, info os.FileInfo, err error) error {
 		if err != nil {
 			return err
@@ -47,12 +47,12 @@ func getEntries(directory string, URL string) ([]Entry, error) {
 		if info.IsDir() {
 			return nil
 		}
-		hash, err := calculateHash(path)
+		hash, err := CalculateHash(path)
 		if err != nil {
 			return err
 		}
-		file := strings.Replace(strings.ReplaceAll(strings.Replace(path, directory, "", 1), "\\", "/"), "/", "", 1)
-		entries = append(entries, Entry{
+		file := GetFilename(path, directory)
+		entries = append(entries, File{
 			File:     file,
 			Checksum: hash,
 			URL:      URL + file,
@@ -66,7 +66,8 @@ func getEntries(directory string, URL string) ([]Entry, error) {
 	return entries, nil
 }
 
-func calculateHash(path string) (string, error) {
+// CalculateHash calculates a sha256 hash of a file
+func CalculateHash(path string) (string, error) {
 	file, err := os.Open(path)
 	if err != nil {
 		return "", nil
@@ -80,7 +81,11 @@ func calculateHash(path string) (string, error) {
 	return hex.EncodeToString(hash.Sum(nil)), nil
 }
 
-func createManifest(entries []Entry, output string) error {
+func GetFilename(path string, parentDirectory string) string {
+	return strings.Replace(strings.ReplaceAll(strings.Replace(path, parentDirectory, "", 1), "\\", "/"), "/", "", 1)
+}
+
+func createManifest(entries []File, output string) error {
 	bytes, err := json.Marshal(entries)
 	if err != nil {
 		return err
