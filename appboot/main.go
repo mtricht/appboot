@@ -9,8 +9,12 @@ import (
 )
 
 func main() {
-	if isLauncher() {
-		appboot, err := launcher.NewAppboot()
+	config := "./app/appboot.json"
+	if os.Getenv("APPBOOT_JSON") != "" {
+		config = os.Getenv("APPBOOT_JSON")
+	}
+	if isLauncher(config) {
+		appboot, err := launcher.NewAppboot(config)
 		if err != nil {
 			log.Fatalln(err)
 			return
@@ -24,13 +28,15 @@ func main() {
 			appboot.Update()
 			log.Println("Updated!")
 		}
-		appboot.RunCommand()
+		if err = appboot.RunCommand(); err != nil {
+			log.Fatalln(err)
+		}
 		return
 	}
 	cmd.Execute()
 }
 
-func isLauncher() bool {
-	_, err := os.Stat("./app/appboot.json")
-	return !os.IsNotExist(err)
+func isLauncher(config string) bool {
+	_, err := os.Stat(config)
+	return !os.IsNotExist(err) && os.Getenv("NO_LAUNCHER") == ""
 }

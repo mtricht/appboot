@@ -4,34 +4,39 @@ import (
 	"encoding/json"
 	"io"
 	"io/ioutil"
-	"log"
 	"net/http"
 	"os"
+	"os/exec"
 	"path/filepath"
 
 	"github.com/mtricht/appboot/pkg/manifest"
-	"github.com/pkg/errors"
 	"github.com/schollz/progressbar/v3"
 )
 
 type Appboot struct {
 	ManifestURL   string `json:"manifest_url"`
 	Command       string `json:"command"`
+	directory     string
 	remoteFiles   map[string]manifest.File
 	localFiles    map[string]manifest.File
 	filesToUpdate map[string]manifest.File
 }
 
-func NewAppboot() (*Appboot, error) {
-	content, err := ioutil.ReadFile("app/appboot.json")
+func NewAppboot(config string) (*Appboot, error) {
+	content, err := ioutil.ReadFile(config)
 	if err != nil {
-		return nil, errors.Wrap(err, "unable to read app/appboot.json file")
+		return nil, err
 	}
 	var appboot Appboot
 	err = json.Unmarshal(content, &appboot)
 	if err != nil {
-		return nil, errors.Wrap(err, "unable to read app/appboot.json file")
+		return nil, err
 	}
+	absolutePath, err := filepath.Abs(config)
+	if err != nil {
+		return nil, err
+	}
+	appboot.directory = filepath.Dir(absolutePath)
 	return &appboot, nil
 }
 
@@ -67,11 +72,7 @@ func (a *Appboot) getRemoteFiles() error {
 
 func (a *Appboot) getLocalFiles() error {
 	a.localFiles = make(map[string]manifest.File)
-	directory, err := filepath.Abs("./app")
-	if err != nil {
-		return err
-	}
-	err = filepath.Walk(directory, func(path string, info os.FileInfo, err error) error {
+	err := filepath.Walk(a.directory, func(path string, info os.FileInfo, err error) error {
 		if err != nil {
 			return err
 		}
@@ -82,7 +83,7 @@ func (a *Appboot) getLocalFiles() error {
 		if err != nil {
 			return err
 		}
-		filename := manifest.GetFilename(path, directory)
+		filename := manifest.GetFilename(path, a.directory)
 		a.localFiles[filename] = manifest.File{
 			File:     filename,
 			Checksum: hash,
@@ -102,9 +103,9 @@ func (a Appboot) Update() error {
 		resp, _ := http.DefaultClient.Do(req)
 		defer resp.Body.Close()
 
-		abs, _ := filepath.Abs("app/" + file.File)
-		_ = os.MkdirAll(filepath.Dir(abs), os.ModePerm)
-		f, _ := os.OpenFile("app/"+file.File, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0644)
+		path, _ := filepath.Abs(filepath.Join(a.directory, file.File))
+		_ = os.MkdirAll(filepath.Dir(path), os.ModePerm)
+		f, _ := os.OpenFile(path, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0644)
 		defer f.Close()
 
 		bar := progressbar.DefaultBytes(
@@ -116,6 +117,12 @@ func (a Appboot) Update() error {
 	return nil
 }
 
-func (a Appboot) RunCommand() {
-	log.Printf("Execute %s", a.Command)
+func (a Appboot) RunCommand() error {
+	command := exec.Command(a.Command)
+	command.Stdout = os.Stdout
+	command.Stderr = os.Stderr
+	if err := command.Run(); err != nil {
+		return err
+	}
+	return nil
 }
