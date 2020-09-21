@@ -2,17 +2,10 @@
 
 A cross-platform language-agnostic bootstrapper which keeps your application up to date. Available for CLI and GUI applications.
 
-## Installation
+## Manifest file
+The manifest file is a JSON file which has to be hosted somewhere. The manifest file holds information about your application such as what files are needed to run, where they can be downloaded from and what their SHA2 hash is. Appboot will use this information to keep your application up to date.
 
-## Application structure
-
-```
-<Program name>.(exe|sh)
-app/appboot.json
-```
-
-## Manifest
-A manifest can be generated with `appboot manifest` and is always named `appboot.json`. A manifest is a JSON file containing an array of objects with the following keys:
+A manifest file can be generated with `appboot manifest`. The JSON file consists of an array of objects with the following keys:
 
 | Manifest key | Description |
 | --- | --- |
@@ -22,20 +15,12 @@ A manifest can be generated with `appboot manifest` and is always named `appboot
 | `size` | Size of the file in bytes. |
 
 ## Launcher configuration
+Place a compiled appboot together with a folder named `app`. An `appboot.json` file is required in this app folder with the following contents:
 
 | Configuration name | Description |
 | --- | --- |
 | `manifest_url` | URL to a manifest containing a list of files and their latest version. |
 | `command` | The command to execute to start your program. |
-
-## Lifecycle
-
-1. Read configuration from env/files with [viper](https://github.com/spf13/viper)
-2. Create launcher
-3. Download remote master file
-4. Determine if upate is needed, if none is needed continue to 6
-5. Track download progress
-6. Execute command
 
 ## TODO
 
