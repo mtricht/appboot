@@ -14,8 +14,7 @@ A cross-platform language-agnostic bootstrapper which keeps your application up 
 
 ```
 <Program name>.(exe|sh)
-appboot.yaml
-app/
+app/appboot.json
 ```
 
 ## Manifest

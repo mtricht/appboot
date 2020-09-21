@@ -16,6 +16,6 @@ func main() {
 }
 
 func isLauncher() bool {
-	_, err := os.Stat("appboot.json")
+	_, err := os.Stat("app/appboot.json")
 	return !os.IsNotExist(err)
 }
