@@ -12,7 +12,6 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/mtricht/appboot/pkg/model"
 	"github.com/pkg/errors"
 )
 
@@ -39,8 +38,8 @@ func Generate(source string, output string, URL string) error {
 	return createManifest(entries, output)
 }
 
-func getEntries(directory string, URL string) ([]model.Entry, error) {
-	entries := make([]model.Entry, 0)
+func getEntries(directory string, URL string) ([]Entry, error) {
+	entries := make([]Entry, 0)
 	err := filepath.Walk(directory, func(path string, info os.FileInfo, err error) error {
 		if err != nil {
 			return err
@@ -53,7 +52,7 @@ func getEntries(directory string, URL string) ([]model.Entry, error) {
 			return err
 		}
 		file := strings.Replace(strings.ReplaceAll(strings.Replace(path, directory, "", 1), "\\", "/"), "/", "", 1)
-		entries = append(entries, model.Entry{
+		entries = append(entries, Entry{
 			File:     file,
 			Checksum: hash,
 			URL:      URL + file,
@@ -81,7 +80,7 @@ func calculateHash(path string) (string, error) {
 	return hex.EncodeToString(hash.Sum(nil)), nil
 }
 
-func createManifest(entries []model.Entry, output string) error {
+func createManifest(entries []Entry, output string) error {
 	bytes, err := json.Marshal(entries)
 	if err != nil {
 		return err

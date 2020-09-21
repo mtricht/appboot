@@ -1,4 +1,4 @@
-package model
+package manifest
 
 // Entry represents a file in the manifest
 type Entry struct {
