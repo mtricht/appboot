@@ -15,7 +15,7 @@ A manifest file can be generated with `appboot manifest`. The JSON file consists
 | `size` | Size of the file in bytes. |
 
 ## Launcher configuration
-An `appboot.json` file is required with the following contents:
+To use the hosted manifest file, a compiled appboot for the underlying OS is required. Inside that same folder, a `appboot.json` file is required with the following contents:
 
 | Configuration name | Description |
 | --- | --- |
