@@ -20,10 +20,10 @@ Place a compiled appboot together with a folder named `app`. An `appboot.json` f
 | Configuration name | Description |
 | --- | --- |
 | `manifest_url` | URL to a manifest containing a list of files and their latest version. |
-| `(darwin|windows|linux)_command` | The command to execute to start your program. |
+| `(darwin\|windows\|linux)_command` | The command to execute to start your program. |
 
 ## TODO
 
-- [X] Implement CLI version with [schollz/progressbar](https://github.com/schollz/progressbar)
-- [ ] Implement GUI version. [wails](https://github.com/wailsapp/wails)? [fyne](https://github.com/fyne-io/fyne)? [astilectron](https://github.com/asticode/go-astilectron)? [Qt](https://github.com/therecipe/qt)?
+- [X] Implement CLI version using [schollz/progressbar](https://github.com/schollz/progressbar)
+- [ ] Implement GUI version using [Qt](https://github.com/therecipe/qt)
 - [ ] Is it possible to update appboot itself?
