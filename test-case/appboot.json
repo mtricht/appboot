@@ -1,5 +1,7 @@
 {
   "name": "Test case",
   "manifest_url": "https://storage.googleapis.com/michael-personal/manifest.json",
-  "command": "./application.sh"
+  "darwin_command": "sh application.sh",
+  "linux_command": "sh application.sh",
+  "windows_command": "cmd.exe /C application.bat"
 }

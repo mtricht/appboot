@@ -19,7 +19,7 @@ func main() {
 			log.Fatalln(err)
 			return
 		}
-		log.Println("Launching " + appboot.Name)
+		log.Println("Checking for updates for " + appboot.Name)
 		updateRequired, err := appboot.CheckForUpdates()
 		if err != nil {
 			log.Fatalln(err)

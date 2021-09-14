@@ -8,19 +8,22 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"runtime"
 
 	"github.com/mtricht/appboot/pkg/manifest"
 	"github.com/schollz/progressbar/v3"
 )
 
 type Appboot struct {
-	Name          string `json:"name"`
-	ManifestURL   string `json:"manifest_url"`
-	Command       string `json:"command"`
-	directory     string
-	remoteFiles   map[string]manifest.File
-	localFiles    map[string]manifest.File
-	filesToUpdate map[string]manifest.File
+	Name           string `json:"name"`
+	ManifestURL    string `json:"manifest_url"`
+	WindowsCommand string `json:"windows_command"`
+	LinuxCommand   string `json:"linux_command"`
+	DarwinCommand  string `json:"darwin_command"`
+	directory      string
+	remoteFiles    map[string]manifest.File
+	localFiles     map[string]manifest.File
+	filesToUpdate  map[string]manifest.File
 }
 
 func NewAppboot(config string) (*Appboot, error) {
@@ -99,7 +102,11 @@ func (a *Appboot) getLocalFiles() error {
 }
 
 func (a Appboot) Update() error {
+	// TODO: Check errors
 	for _, file := range a.filesToUpdate {
+		if file.File == "appboot.josn" {
+			continue
+		}
 		req, _ := http.NewRequest("GET", file.URL, nil)
 		resp, _ := http.DefaultClient.Do(req)
 		defer resp.Body.Close()
@@ -119,7 +126,17 @@ func (a Appboot) Update() error {
 }
 
 func (a Appboot) RunCommand() error {
-	command := exec.Command(a.Command)
+	commandString := ""
+	if runtime.GOOS == "windows" {
+		commandString = a.WindowsCommand
+	} else if runtime.GOOS == "linux" {
+		commandString = a.LinuxCommand
+	} else if runtime.GOOS == "darwin" {
+		commandString = a.DarwinCommand
+	} else {
+		panic("Unknown OS encountered")
+	}
+	command := exec.Command(commandString)
 	command.Stdout = os.Stdout
 	command.Stderr = os.Stderr
 	if err := command.Run(); err != nil {
