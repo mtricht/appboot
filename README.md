@@ -28,3 +28,5 @@ An `appboot.json` file is required with the following contents:
 - [X] Implement CLI version using [schollz/progressbar](https://github.com/schollz/progressbar)
 - [ ] Implement GUI version using [Qt](https://github.com/therecipe/qt)
 - [ ] Is it possible to update appboot itself?
+- [ ] Compile with `-ldflags -H=windowsgui` to hide command prompt
+- [ ] Compile with `-ldflags -Main.version=x.x.x`

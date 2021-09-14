@@ -9,6 +9,7 @@ import (
 	"os/exec"
 	"path/filepath"
 	"runtime"
+	"strings"
 
 	"github.com/mtricht/appboot/pkg/manifest"
 	"github.com/schollz/progressbar/v3"
@@ -104,9 +105,6 @@ func (a *Appboot) getLocalFiles() error {
 func (a Appboot) Update() error {
 	// TODO: Check errors
 	for _, file := range a.filesToUpdate {
-		if file.File == "appboot.josn" {
-			continue
-		}
 		req, _ := http.NewRequest("GET", file.URL, nil)
 		resp, _ := http.DefaultClient.Do(req)
 		defer resp.Body.Close()
@@ -136,7 +134,8 @@ func (a Appboot) RunCommand() error {
 	} else {
 		panic("Unknown OS encountered")
 	}
-	command := exec.Command(commandString)
+	commandSplit := strings.Fields(commandString)
+	command := exec.Command(commandSplit[0], commandSplit[1:]...)
 	command.Stdout = os.Stdout
 	command.Stderr = os.Stderr
 	if err := command.Run(); err != nil {
