@@ -9,7 +9,7 @@ import (
 )
 
 func main() {
-	config := "./app/appboot.json"
+	config := "./appboot.json"
 	if os.Getenv("APPBOOT_JSON") != "" {
 		config = os.Getenv("APPBOOT_JSON")
 	}
@@ -19,14 +19,22 @@ func main() {
 			log.Fatalln(err)
 			return
 		}
+		log.Println("Launching " + appboot.Name)
 		updateRequired, err := appboot.CheckForUpdates()
 		if err != nil {
 			log.Fatalln(err)
 			return
 		}
 		if updateRequired {
+			log.Println("Starting update for " + appboot.Name)
 			appboot.Update()
-			log.Println("Updated!")
+			log.Println("Successfully updated " + appboot.Name)
+		}
+		// Re-read appboot.json in case it has been updated.
+		appboot, err = launcher.NewAppboot(config)
+		if err != nil {
+			log.Fatalln(err)
+			return
 		}
 		if err = appboot.RunCommand(); err != nil {
 			log.Fatalln(err)

@@ -1,4 +1,5 @@
 {
+  "name": "Test case",
   "manifest_url": "https://storage.googleapis.com/michael-personal/manifest.json",
-  "command": "sh application.sh"
+  "command": "./application.sh"
 }

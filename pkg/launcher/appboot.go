@@ -14,6 +14,7 @@ import (
 )
 
 type Appboot struct {
+	Name          string `json:"name"`
 	ManifestURL   string `json:"manifest_url"`
 	Command       string `json:"command"`
 	directory     string

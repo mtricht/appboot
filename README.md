@@ -15,10 +15,11 @@ A manifest file can be generated with `appboot manifest`. The JSON file consists
 | `size` | Size of the file in bytes. |
 
 ## Launcher configuration
-Place a compiled appboot together with a folder named `app`. An `appboot.json` file is required in this app folder with the following contents:
+An `appboot.json` file is required with the following contents:
 
 | Configuration name | Description |
 | --- | --- |
+| `name` | The application name. |
 | `manifest_url` | URL to a manifest containing a list of files and their latest version. |
 | `(darwin\|windows\|linux)_command` | The command to execute to start your program. |
 
