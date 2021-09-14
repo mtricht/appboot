@@ -20,7 +20,7 @@ Place a compiled appboot together with a folder named `app`. An `appboot.json` f
 | Configuration name | Description |
 | --- | --- |
 | `manifest_url` | URL to a manifest containing a list of files and their latest version. |
-| `command` | The command to execute to start your program. |
+| `(darwin|windows|linux)_command` | The command to execute to start your program. |
 
 ## TODO
 
