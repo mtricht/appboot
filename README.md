@@ -30,3 +30,4 @@ To use the hosted manifest file, a compiled appboot for the underlying OS is req
 - [ ] Is it possible to update appboot itself?
 - [ ] Compile with `-ldflags -H=windowsgui` to hide command prompt
 - [ ] Compile with `-ldflags -Main.version=x.x.x`
+- [ ] Sign and verify appboot.json?
